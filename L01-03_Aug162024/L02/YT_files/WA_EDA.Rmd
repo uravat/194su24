@@ -1,0 +1,111 @@
+---
+title: 'L02: Work Along: Exploring `penguins` dataset in `R`'
+author: "Dr. Uma Ravat"
+date: "PSTAT 194TR"
+subtitle: '<br><br> '
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo = F}
+bfcolor <- function(x, color) {
+  if (knitr::is_latex_output()) {
+    sprintf("\\textcolor{%s}{\\textbf{%s}}", color, x)
+  } else if (knitr::is_html_output()) {
+    sprintf("<span style='color: %s;'><b>%s</b></span>", color, x)
+  } else x
+}
+```
+
+# Simple EDA for `penguins` dataset
+
+```{r}
+library(palmerpenguins) # load the package
+data(penguins) # load the dataset we want to explore
+```
+
+- How many observations/samples? How many variables? 
+- What does each observation, variable represent?
+
+
+##  Data documentation/Data code book
+
+
+```{r echo=TRUE, eval=TRUE}
+?penguins # at console! documentation of `penguins` dataset 
+class(penguins) # dataset is stored as a dataframe in R
+```
+
+
+## What kind of data is in `penguins` dataset?
+
+What are the variables(columns), observations/samples(rows), data types?
+
+```{r}
+str(penguins)
+```
+
+## Viewing data using functions
+
+```{r }
+head(penguins)
+```
+```{r }
+tail(penguins)
+```
+
+```{r }
+dim(penguins)
+```
+
+```{r }
+ncol(penguins)
+```
+
+```{r }
+colnames(penguins)
+```
+
+```{r }
+nrow(penguins)
+```
+
+## Descriptive statistics checks in `R`
+
+sample variance = (average) of squared distance from the mean
+
+$$s^2 = \frac{\displaystyle\sum_{i = 1}^{n} (x_i - \bar x )^2}{n-1}$$ 
+
+```{r}
+# variance and standard deviation
+x <- c(1, 5, 3, 2, 5, 4, 6)
+xbar <- mean(x) # mean
+x - xbar # distance from mean
+1 - xbar; 5 - xbar # check
+x[1] - xbar; x[2] - xbar # check
+sq_dist <- (x - xbar)^2 # squared distance from the mean
+sum(sq_dist) # total(sum) of square distance from the mean
+sum(sq_dist)/(length(x)-1)
+ # sample variance
+var(x) # using R function
+sqrt(sum(sq_dist)/(length(x)-1))
+sqrt(var(x))
+sd(x)
+```
+
+
+```{r}
+# quantiles
+x <- c(1, 5, 3, 2, 5, 4, 6)
+mean(x)
+median(x)
+quantile(x, .25)
+quantile(x, .5)
+quantile(x, c(.25, .5, .75))
+x
+sort(x)
+
+```

@@ -1,0 +1,116 @@
+---
+title: "Your Turn : R essentials"
+author: "Dr. Uma Ravat"
+date: "PSTAT 194TR"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo = F}
+bfcolor <- function(x, color) {
+  if (knitr::is_latex_output()) {
+    sprintf("\\textcolor{%s}{\\textbf{%s}}", color, x)
+  } else if (knitr::is_html_output()) {
+    sprintf("<span style='color: %s;'><b>%s</b></span>", color, x)
+  } else x
+}
+```
+
+## 3. R essentials : 
+
+### 3.1 Object assignment, evaluation, errors
+
+Do you understand what each line of code in the code block below is doing? Can you explain each line in your own words to someone?
+
+Notice how the output of code block velow isn't in the knitted ,html file. 
+
+This is because the code block below has an error. Try running it by pressing the run code button(green triangle). 
+
+Read the error to figure out what the issue is. Can you fix the error? What was the error and how did you fix it? 
+
+Once you fix the error, you can change `eval = FALSE` to `eval = TRUE` and the code will get evaluated when knitted and you'll see the code output in the knitted html file. Try it!
+
+```{r eval = FALSE}
+
+x <- 2         # Assignment # note change in environment
+x              # Evaluate the expression and print result
+
+y <- 3         # Assignment
+y + 5          # Evaluation, y remains 3
+
+z <- x + 17*y  # Assignment # use previously defined object/variable
+z              # Evaluation
+
+rm(z)          # Remove z: deletes the object.
+z              # Error!
+
+y_cube <- y^3  # use previously defined object/variable y 
+#and assign it's cube to the object y_cube
+
+y_cube
+y
+```
+
+```{r error = TRUE}
+y <- 3
+Y # R is case sensitive
+Y <- 4
+Y
+y
+# Notive how the paste function helps the output be more explicit. 
+print(paste("y has value: ", y, ", Y has value:  ", Y))
+```
+
+## 5. Data structures
+
+### Vectors
+
+```{r vectors}
+# We can create a vector with c(), a function which combines values known as the combine function
+v1 <- c(1, 5, 11, 33)       # Numeric vector, length 4
+v2 <- c("hello","world")    # Character vector, length 2 (a vector of strings)
+v3 <- c(TRUE, TRUE, FALSE)  # Logical vector, length 3, same as c(T, T, F)
+```
+
+
+
+### Working with vectors
+
+Can you explain how vector operations below work? 
+
+```{r}
+# Vector operations: Vectorized operations in R make R efficient!
+v1 <- 1:5         # 1,2,3,4,5
+v1
+v2 <- rep(1,5)    # 1,1,1,1,1 
+v2
+
+# Element-wise operations:
+v1 + v2      # Element-wise addition
+v1 + 1       # Add 1 to each element
+v1 * 2       # Multiply each element by 2
+v1 + c(1,2)  # Problem: c(1,2) is a vector of a different length; Warning and R still  complete your request by using "recycling"
+```
+# Extracting specific elements of a vector is called subsetting a vector
+```{r}
+v1             # Let's recall what v1 is
+
+# Vector elements: Index in R starts at 1
+# NOTE: If you are used to languages indexing from 0, R will surprise you by indexing from 1.
+
+v1[3]             # third element of v1
+v1[2:4]           # elements 2, 3, 4 of v1
+v1[c(1,3)]        # elements 1 and 3 - note that your indexes here are a vector
+v1[c(T,T,F,F,F)]  # elements 1 and 2 - only returns the ones that are TRUE
+v1[v1>3]          # v1>3 is a logical vector TRUE for elements >3; returns index and not value/element at that index
+v1[-3]            # negative number: will return all elements *except* the third
+# To replace elements in a vector, assign them a new value
+v1[5] <- 10
+v1
+```
